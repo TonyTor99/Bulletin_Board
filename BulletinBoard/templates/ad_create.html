@@ -1,0 +1,80 @@
+{% extends 'flatpages/base.html' %}
+
+{% block title %}
+    Создать объявление - QuestBoard
+{% endblock title %}
+
+{% block header %}
+    <header class="bg-dark py-4">
+        <div class="container px-4 px-lg-5 my-4">
+            <div class="text-center text-light">
+                <h2 class="fw-bold">Создать новое объявление</h2>
+                <p class="fw-light text-white-75 mb-0">
+                    Разместите ваше объявление на QuestBoard.
+                </p>
+            </div>
+        </div>
+    </header>
+{% endblock header %}
+
+{% block content %}
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h4 class="card-title">Создание нового объявления</h4>
+                        <form method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            
+                            <!-- Заголовок -->
+                            <div class="mb-3">
+                                <label for="id_title" class="form-label">Заголовок</label>
+                                {{ form.title }}
+                                {% if form.title.errors %}
+                                    <div class="text-danger">
+                                        {% for error in form.title.errors %}
+                                            <p>{{ error }}</p>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Контент -->
+                            <div class="mb-3">
+                                <label for="id_content" class="form-label">Контент</label>
+                                {{ form.content }}
+                                {{ form.media }}
+                                {% if form.content.errors %}
+                                    <div class="text-danger">
+                                        {% for error in form.content.errors %}
+                                            <p>{{ error }}</p>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Категория -->
+                            <div class="mb-3">
+                                <label for="id_category" class="form-label">Категория</label>
+                                {{ form.category }}
+                                {% if form.category.errors %}
+                                    <div class="text-danger">
+                                        {% for error in form.category.errors %}
+                                            <p>{{ error }}</p>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Кнопка отправки -->
+                            <button type="submit" class="btn btn-primary">
+                                Создать объявление
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

@@ -1,0 +1,68 @@
+{% extends 'flatpages/base.html' %}
+
+{% block title %}
+    Добро пожаловать на QuestBoard
+{% endblock title %}
+
+{% block header %}
+    <header class="bg-dark py-4">
+        <div class="container px-4 px-lg-5 my-4">
+            <div class="text-center text-light">
+                <h2 class="fw-bold">Доска объявлений</h2>
+                <p class="fw-light text-white-75 mb-4">
+                    Найдите интересные объявления или разместите своё прямо сейчас.
+                </p>
+                <!-- Перемещенные кнопки под приветственный текст -->
+                <div>
+                    <a href="{% url 'ad_create' %}" class="btn btn-primary mb-3">Опубликовать объявление</a>
+                    <div class="d-flex justify-content-center">
+                        <form method="get" action="{% url 'ad_list' %}" class="d-flex w-50">
+                            <input type="text" name="search" class="form-control" placeholder="Поиск поста" value="{{ request.GET.search }}">
+                            <button type="submit" class="btn btn-secondary ms-2">Поиск</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+{% endblock header %}
+
+{% block content %}
+    <div class="ad-list">
+        {% for ad in ads %}
+            <div class="ad-card">
+                <h2 class="nav-item">
+                    <a href="{% url 'ad_detail' ad.id %}" style="text-decoration: none; color: inherit;">{{ ad.title }}</a>
+                </h2>
+                <p class="ad-author">Автор: {{ ad.author }}</p>
+                <div class="rich-text-content">
+                    {{ ad.content|safe }}
+                </div>
+            </div>
+        <hr>
+        {% empty %}
+            <li>Нет объявлений</li>
+        {% endfor %}
+    </div>
+
+    <!-- Пагинация -->
+    <div class="pagination-container text-center">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">1</a>
+            {% if page_obj.previous_page_number != 1 %}
+                ...
+                <a href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a>
+            {% endif %}
+        {% endif %}
+
+        {{ page_obj.number }}
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a>
+            {% if paginator.num_pages != page_obj.next_page_number %}
+                ...
+                <a href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
+            {% endif %}
+        {% endif %}
+    </div>
+{% endblock content %}

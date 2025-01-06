@@ -1,0 +1,59 @@
+{% extends 'flatpages/base.html' %}
+
+{% block title %}
+    Редактировать объявление - QuestBoard
+{% endblock title %}
+
+{% block header %}
+    <header class="bg-dark py-4">
+        <div class="container px-4 px-lg-5 my-4">
+            <div class="text-center text-light">
+                <h2 class="fw-bold">Редактирование объявления</h2>
+                <p class="fw-light text-white-75 mb-0">
+                    Измените ваше объявление на QuestBoard.
+                </p>
+            </div>
+        </div>
+    </header>
+{% endblock header %}
+
+{% block content %}
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h4 class="card-title">Редактировать объявление</h4>
+                        <form method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+
+                            <!-- Заголовок -->
+                            <div class="mb-3">
+                                <label for="id_title" class="form-label">Заголовок</label>
+                                {{ form.title }}
+                            </div>
+
+                            <!-- Контент (CKEditor) -->
+                            <div class="mb-3">
+                                <label for="id_content" class="form-label">Контент</label>
+                                {{ form.content }}  <!-- Здесь будет отображаться CKEditor -->
+                            </div>
+
+                            <!-- Категория -->
+                            <div class="mb-3">
+                                <label for="id_category" class="form-label">Категория</label>
+                                {{ form.category|safe }}
+                                {{ form.media }}
+                            </div>
+
+                            <!-- Кнопка отправки -->
+                            <button type="submit" class="btn btn-primary">
+                                Обновить объявление
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

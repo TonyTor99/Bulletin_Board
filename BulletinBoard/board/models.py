@@ -7,9 +7,15 @@ from ckeditor_uploader.fields import RichTextUploadingField
 class Profile(models.Model):  # Профиль пользователя
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
 
+    def __str__(self):
+        return self.user.username
+
 
 class Category(models.Model):  # Категории
     name = models.CharField(max_length=64, unique=True)
+
+    def __str__(self):
+        return self.name
 
 
 class Ad(models.Model):  # Объявления
@@ -19,6 +25,9 @@ class Ad(models.Model):  # Объявления
     category = models.ManyToManyField(Category, through='AdCategory', related_name='category')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.title
 
 
 class Response(models.Model):  # Отклики

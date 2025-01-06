@@ -1,0 +1,18 @@
+{% extends 'flatpages/base.html' %}
+
+
+{% block title %}
+    Добро пожаловать на QuestBoard
+{% endblock title %}
+
+{% block header %}
+    <h1>Добро пожаловать на QuestBoard!</h1>
+    <p>Ваше приключение начинается здесь!</p>
+{% endblock header %}
+
+{% block content %}
+    <h2>Готовы к новым квестам?</h2>
+    <p>Мы предоставляем место для всех фанатов MMORPG, чтобы обмениваться объявлениями, обсуждать события и делиться опытом.</p>
+    <p>Независимо от того, вы новичок или опытный игрок, здесь каждый найдёт что-то для себя!</p>
+    <button class="button" onclick="window.location.href='/ads'">Посмотреть доступные объявления</button>
+{% endblock content %}
