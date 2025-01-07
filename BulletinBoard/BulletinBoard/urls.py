@@ -18,19 +18,18 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth.decorators import login_required
-from django.urls import path, include
-from ckeditor_uploader import views as ckeditor_views
-
+from django.urls import path, include, re_path
+from ckeditor_uploader.views import upload, browse
+from django.views.decorators.cache import never_cache
 
 urlpatterns = ([
     path('admin/', admin.site.urls),
     path("accounts/", include("allauth.urls")),
     path('ckeditor/', include('ckeditor_uploader.urls')),
-    path('ckeditor/upload/', login_required(ckeditor_views.upload), name='ckeditor_upload'),
-    path('ckeditor/browse/', login_required(ckeditor_views.browse), name='ckeditor_browse'),
+    re_path(r'^/upload/', login_required(upload), name='ckeditor_upload'),
+    re_path(r'^/browse/', login_required(never_cache(browse)), name='ckeditor_browse'),
     path('', include('board.urls')),
 ])
-
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

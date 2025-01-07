@@ -36,7 +36,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.forms',
     'board',
     'ckeditor',
     'ckeditor_uploader',
@@ -119,6 +118,10 @@ ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_VERIFICATION = 'none'
 
+ACCOUNT_SIGNUP_REDIRECT_URL = '/'
+ACCOUNT_LOGOUT_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/ads/'
+
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
@@ -134,18 +137,18 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [
+    BASE_DIR / "static"
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-STATICFILES_DIRS = [
-    BASE_DIR / "static"
-]
-
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
 CKEDITOR_UPLOAD_PATH = "uploads/"
 CKEDITOR_CONFIGS = {
     'default': {
@@ -166,6 +169,7 @@ CKEDITOR_CONFIGS = {
         'defaultImageWidth': '300px',    # Установка ширины по умолчанию (можно изменить значение)
         'defaultImageHeight': 'auto',    # Высота будет рассчитываться автоматически
         'removeButtons': 'Subscript,Superscript',  # Удаление ненужных кнопок
-        'allowedContent': 'p h1 h2 h3 blockquote strong em; img[!src,alt,width,height]; video[!src]',  # Разрешенные теги
+        'allowedContent': 'p h1 h2 h3 blockquote strong em; img[!src,alt,width,height]; video[!src]',  # Разрешенные
+        # теги
     }
 }
