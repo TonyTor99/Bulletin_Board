@@ -66,6 +66,3 @@ class MyResponses(ListView):
     def get_queryset(self):
         ads = Ad.objects.filter(author=self.request.user.profile)
         return Response.objects.filter(ad__in=ads).order_by(self.ordering)
-
-
-

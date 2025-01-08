@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'board',
+    'users',
     'ckeditor',
     'ckeditor_uploader',
     'allauth',
@@ -112,15 +113,28 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
+AUTH_USER_MODEL = 'users.User'
+
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_VERIFICATION = 'none'
 
+ACCOUNT_FORMS = {'signup': 'users.forms.CommonSignupForm'}
+
 ACCOUNT_SIGNUP_REDIRECT_URL = '/'
 ACCOUNT_LOGOUT_REDIRECT_URL = '/'
 LOGIN_REDIRECT_URL = '/ads/'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = "shpenov1@yandex.ru"
+EMAIL_HOST_PASSWORD = "uwiamzuzflocmcst"
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+DEFAULT_FROM_EMAIL = "shpenov1@yandex.ru"
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/

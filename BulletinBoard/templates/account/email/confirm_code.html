@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Код подтверждения</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .email-container {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        .header {
+            background-color: #4CAF50;
+            color: #ffffff;
+            text-align: center;
+            padding: 20px;
+            font-size: 24px;
+        }
+        .content {
+            padding: 20px;
+            text-align: center;
+        }
+        .content p {
+            font-size: 16px;
+            color: #555555;
+            line-height: 1.5;
+        }
+        .code {
+            display: inline-block;
+            margin: 20px 0;
+            padding: 10px 20px;
+            background-color: #f9f9f9;
+            border: 1px dashed #4CAF50;
+            font-size: 24px;
+            font-weight: bold;
+            color: #333333;
+            letter-spacing: 2px;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 14px;
+            color: #888888;
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="header">
+            Подтверждение почты
+        </div>
+        <div class="content">
+            <p>Здравствуйте!</p>
+            <p>Спасибо за регистрацию! Пожалуйста, используйте код ниже для подтверждения вашего email:</p>
+            <div class="code">{{ code }}</div>
+            <p>Если вы не отправляли этот запрос, просто проигнорируйте это письмо.</p>
+            <p>С уважением, <br>Команда QuestBoard</p>
+        </div>
+        <div class="footer">
+            © 2025 QuestBoard. Все права защищены.
+        </div>
+    </div>
+</body>
+</html>

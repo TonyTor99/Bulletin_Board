@@ -29,6 +29,7 @@ urlpatterns = ([
     re_path(r'^/upload/', login_required(upload), name='ckeditor_upload'),
     re_path(r'^/browse/', login_required(never_cache(browse)), name='ckeditor_browse'),
     path('', include('board.urls')),
+    path('', include('users.urls'))
 ])
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

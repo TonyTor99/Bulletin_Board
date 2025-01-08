@@ -1,0 +1,21 @@
+{% extends 'flatpages/base.html' %}
+
+{% block title %}
+    Подтверджение почты
+{% endblock title %}
+
+{% block header %}
+    Страница подтверждения почты
+{% endblock header %}
+
+{% block content %}
+<form action="{% url 'confirm_user' %}" method="post">
+    {% csrf_token %}
+    <label for="code">Введите код подтверждения:</label>
+    <input type="text" name="code" id="code" required>
+    <button type="submit">Подтвердить</button>
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+</form>
+{% endblock content %}

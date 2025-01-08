@@ -1,0 +1,18 @@
+{% extends 'flatpages/base.html' %}
+
+{% block title %}
+    Активация аккаунта
+{% endblock title %}
+
+{% block header %}
+    Активация аккаунта
+{% endblock header %}
+
+{% block content %}
+    <h4 style="color: red;">Срок годности кода истек</h4>
+    <form method="post" action="{% url 'request_new_code' %}">
+    {% csrf_token %}
+    <input type="hidden" name="user_id" value="{{ user_id }}">
+    <button type="submit">Запросить новый код</button>
+    </form>
+{% endblock content %}
