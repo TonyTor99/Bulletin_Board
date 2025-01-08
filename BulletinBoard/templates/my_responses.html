@@ -18,13 +18,20 @@
 {% endblock header %}
 
 {% block content %}
-     <div class="container">
+    <div class="container">
         <div class="response-list">
             {% for response in responses %}
                 <div class="response-card {% if response.is_accepted %}accepted{% endif %}">
                     <div class="response-header">
                         <h4 class="response-author">{{ response.author.user.username }}</h4>
                         <small class="response-date">{{ response.created_at|date:"d M Y, H:i" }}</small>
+                    </div>
+                    <div class="response-details">
+                        <!-- Информация о объявлении, к которому сделан отклик -->
+                        <div class="ad-info mb-3">
+                            <p><strong>Объявление:</strong> <a class="text-dark text-decoration-none" href="{% url 'ad_detail' response.ad.id %}">{{ response.ad.title }}</a></p>
+                            <p><strong>Категория:</strong> {% for category in response.ad.category.all %}{{ category.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+                        </div>
                     </div>
                     <div class="response-content">
                         <p>{{ response.content }}</p>
@@ -37,12 +44,27 @@
                         <div class="response-status">
                             <span class="badge bg-warning">Ожидает</span>
                         </div>
+                        <!-- Кнопки подтверждения и удаления отклика -->
+                        <div class="response-actions mt-3">
+                            <form method="post" action="{% url 'my_responses' %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="response_id" value="{{ response.id }}">
+                                <input type="hidden" name="action" value="accept">
+                                <button type="submit" class="btn btn-success">Подтвердить отклик</button>
+                            </form>
+                            <form method="post" action="{% url 'my_responses' %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="response_id" value="{{ response.id }}">
+                                <input type="hidden" name="action" value="delete">
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('Вы уверены, что хотите удалить этот отклик?')">Удалить</button>
+                            </form>
+                        </div>
                     {% endif %}
                 </div>
-            <hr>
-        {% empty %}
-            <li class="text-center">Нет откликов</li>
-        {% endfor %}
+                <hr>
+            {% empty %}
+                <li class="text-center">Нет откликов</li>
+            {% endfor %}
         </div>
     </div>
 
@@ -67,3 +89,65 @@
         {% endif %}
     </div>
 {% endblock content %}
+
+{% block styles %}
+<style>
+    .response-card {
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+        margin-bottom: 20px;
+    }
+
+    .response-card.accepted {
+        border-left: 5px solid #28a745;
+    }
+
+    .response-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .response-author {
+        font-weight: bold;
+        color: #333;
+    }
+
+    .response-date {
+        font-size: 12px;
+        color: #777;
+    }
+
+    .response-details {
+        font-size: 14px;
+        color: #555;
+    }
+
+    .ad-info {
+        background-color: #f8f9fa;
+        padding: 10px;
+        border-radius: 8px;
+        margin-bottom: 10px;
+    }
+
+    .response-status .badge {
+        font-size: 14px;
+        padding: 6px 12px;
+    }
+
+    .pagination-container {
+        margin-top: 30px;
+    }
+
+    .pagination-container a {
+        margin: 0 5px;
+        text-decoration: none;
+    }
+
+    .response-actions button {
+        margin-right: 10px;
+    }
+</style>
+{% endblock %}

@@ -22,9 +22,50 @@
                     <!-- Контент объявления -->
                     <div class="ad-content">
                         <div class="rich-text-content">
-                            <!-- Содержимое объявления -->
                             {{ ad.content|safe }}
                         </div>
+                            {% if messages %}
+                                <div class="alert alert-danger">
+                                {% for message in messages %}
+                                    <p>{{ message }}</p>
+                                {% endfor %}
+                                </div>
+                            {% endif %}
+
+                        <!-- Форма отклика -->
+                        {% if user != ad.author.user and not user_response %}
+                        <div class="response-form mt-4">
+                            <h5>Откликнуться на объявление</h5>
+                            <form method="post" action="{% url 'ad_response' ad.id %}">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <textarea name="response_text" class="form-control mb-3" rows="3" placeholder="Введите текст отклика" required></textarea>
+                                    {% if form.response_text.errors %}
+                                        <div class="invalid-feedback d-block">
+                                            {% for error in form.response_text.errors %}
+                                                <p>{{ error }}</p>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <button type="submit" class="btn btn-primary">Откликнуться</button>
+                            </form>
+                        </div>
+                        {% endif %}
+                        {% if user_response %}
+                        <strong><p class="text-success">Вы откликнулись на это объявление</p></strong>
+                        {% endif %}
+
+                        {% if user == ad.author.user or user.is_staff %}
+                        <!-- Кнопки редактирования и удаления -->
+                        <div class="ad-actions mt-4">
+                            <a href="{% url 'ad_update' ad.id %}" class="btn btn-warning me-2">Редактировать</a>
+                            <form method="post" action="{% url 'ad_delete' ad.id %}" style="display: inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('Вы уверены, что хотите удалить это объявление?');">Удалить</button>
+                            </form>
+                        </div>
+                        {% endif %}
                     </div>
                 </div>
                 <div class="col-lg-4">
@@ -65,10 +106,12 @@
         border-radius: 8px;
     }
 
-    .ad-detail .sidebar-title {
-        font-size: 18px;
-        margin-bottom: 15px;
-        color: #333;
+    .response-form textarea {
+        resize: none;
+    }
+
+    .ad-actions .btn {
+        display: inline-block;
     }
 
     .ad-sidebar {
