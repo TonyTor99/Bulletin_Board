@@ -9,7 +9,7 @@ from users.models import User
 
 
 @shared_task
-def send_mail_response(response_pk):
+def send_mail_response(response_pk):  # Отправка письма на почту нвого отклика на объявление
     response = Response.objects.get(pk=response_pk)
     email = response.ad.author.user.email
 
@@ -27,7 +27,7 @@ def send_mail_response(response_pk):
 
 
 @shared_task
-def send_mail_response_to_author_when_accepted(response_pk):
+def send_mail_response_to_author_when_accepted(response_pk):  # Отправка письма автору отклика после его принятия
     response = Response.objects.get(pk=response_pk)
     email = response.author.user.email
 
@@ -45,7 +45,7 @@ def send_mail_response_to_author_when_accepted(response_pk):
 
 
 @shared_task
-def weekly_send():
+def weekly_send():  # Еженедельная рассылка
     last_week = timezone.now() - timezone.timedelta(days=7)
     posts = Ad.objects.filter(created_at__gte=last_week)
     users = User.objects.all()

@@ -136,7 +136,7 @@ class MyResponses(ListView):
         return redirect('my_responses')
 
 
-def ad_response(request, pk):
+def ad_response(request, pk):  # Создание отклика
     ad = get_object_or_404(Ad, id=pk)
 
     if request.method == 'POST':

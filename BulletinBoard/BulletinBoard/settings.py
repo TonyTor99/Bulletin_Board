@@ -157,7 +157,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_DIR= os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = [
     BASE_DIR / "static"
 ]
@@ -179,25 +179,56 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 CKEDITOR_UPLOAD_PATH = "uploads/"
+# CKEDITOR_CONFIGS = {
+#     'default': {
+#         'toolbar': [
+#             {'name': 'insert', 'items': ['Image', 'Html5video']},  # Добавление инструментов для изображений и видео
+#         ],
+#         'width': 'auto',
+#         'height': '300px',
+#         'extraPlugins': ','.join([
+#             'image2',
+#             'html5video',
+#         ]),
+#         'removePlugins': 'sourcearea',  # Убирает возможность редактирования кода
+#         'image2_captionedClass': 'image',
+#         'image2_alignClasses': ['image-align-left', 'image-align-center', 'image-align-right'],
+#         'image_prefillDimensions': True,  # Автоматическое добавление размеров
+#         'defaultImageWidth': '300px',    # Установка ширины по умолчанию (можно изменить значение)
+#         'defaultImageHeight': 'auto',    # Высота будет рассчитываться автоматически
+#         'removeButtons': 'Subscript,Superscript',  # Удаление ненужных кнопок
+#         'allowedContent': 'p h1 h2 h3 blockquote strong em; img[!src,alt]; video[!src]',  # Разрешенные
+#         # теги
+#     }
+# }
 CKEDITOR_CONFIGS = {
     'default': {
-        'toolbar': [
-            {'name': 'insert', 'items': ['Image', 'html5video']},  # Добавление инструментов для изображений и видео
+        'skin': 'moono-lisa',
+        'toolbar_Basic': [
+            ['Source', 'Bold', 'Italic']
         ],
-        'width': 'auto',
-        'height': '300px',
+        'toolbar_YourCustomToolbarConfig': [
+            {'name': 'styles', 'items': ['Styles', 'Format', 'Font', 'FontSize']},
+            {'name': 'insert',
+             'items': ['Html5video', 'Image', 'Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChat',
+                       'Templates', 'Preview']},
+            {'name': 'clipboard', 'items': ['Cut', 'Copy', 'Undo', 'Redo']},
+            {'name': 'colors', 'items': ['TextColor', 'BGColor']},
+            {'name': 'document', 'items': ['Source']},
+            {'name': 'forms',
+             'items': ['Form', 'CheckBox', 'TextField', 'Textarea', 'Select']},
+            {'name': 'basicstyles',
+             'items': ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', 'RemoveFormat']},
+            {'name': 'paragraph',
+             'items': ['NumberedList', 'BulletedList', 'Outdent', 'Indent', 'Blockquote', 'CreateDiv',
+                       'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock']},
+            {'name': 'tools', 'items': ['ShowBlock', 'Maximize', 'MediaEmbed']},
+        ],
+        'toolbar': 'YourCustomToolbarConfig',
+        'tabSpaces': 4,
         'extraPlugins': ','.join([
-            'image2',
+            'uploadimage',
             'html5video',
         ]),
-        'removePlugins': 'sourcearea',  # Убирает возможность редактирования кода
-        'image2_captionedClass': 'image',
-        'image2_alignClasses': ['image-align-left', 'image-align-center', 'image-align-right'],
-        'image_prefillDimensions': True,  # Автоматическое добавление размеров
-        'defaultImageWidth': '300px',    # Установка ширины по умолчанию (можно изменить значение)
-        'defaultImageHeight': 'auto',    # Высота будет рассчитываться автоматически
-        'removeButtons': 'Subscript,Superscript',  # Удаление ненужных кнопок
-        'allowedContent': 'p h1 h2 h3 blockquote strong em; img[!src,alt]; video[!src]',  # Разрешенные
-        # теги
     }
 }
