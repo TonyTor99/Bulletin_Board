@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Еженедельная рассылка</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        .header {
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        .content {
+            padding: 20px;
+        }
+        .announcement {
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        .announcement h2 {
+            font-size: 18px;
+            margin: 0 0 10px;
+        }
+        .announcement p {
+            margin: 0 0 5px;
+        }
+        .announcement a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .footer {
+            text-align: center;
+            font-size: 12px;
+            color: #777;
+            padding: 10px;
+            background-color: #f9f9f9;
+        }
+        .footer a {
+            color: #007bff;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Еженедельная рассылка</h1>
+        </div>
+        <div class="content">
+            <p>Здравствуйте,</p>
+            <p>Вот последние объявления за прошедшую неделю:</p>
+            {% for post in posts %}
+                <div class="announcement">
+                    <h2>{{ post.title }}</h2>
+                    <p>{{ post.content|safe|truncatewords:10 }}</p>
+                    <a href="http://127.0.0.1:8000/ads/{{ post.id }}">Читать далее</a>
+                </div>
+            {% endfor %}
+            <p>Спасибо, что остаётесь с нами!</p>
+        </div>
+        <div class="footer">
+            <p>&copy; 2025 QuestBoard. Все права защищены.</p>
+        </div>
+    </div>
+</body>
+</html>

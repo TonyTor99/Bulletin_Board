@@ -1,4 +1,4 @@
-from django.contrib import messages
+from django.core.cache import cache
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
@@ -25,7 +25,7 @@ class AdList(ListView):
         queryset = super().get_queryset()
 
         if search_query:
-            queryset = queryset.filter(title__icontains=search_query)
+            queryset = queryset.filter(title__iregex=search_query)
 
         return queryset
 
@@ -41,6 +41,14 @@ class MyAdList(ListView):
         user = self.request.user
         return Ad.objects.filter(author=user.profile.id).order_by(self.ordering)
 
+    def get_object(self, *args, **kwargs):
+        obj = cache.get(f'product-{self.kwargs["pk"]}', None)
+
+        if not obj:
+            obj = super().get_object(queryset=self.queryset)
+            cache.set(f'product-{self.kwargs["pk"]}', obj)
+        return obj
+
 
 class AdDetail(DetailView):
     model = Ad
@@ -53,6 +61,14 @@ class AdDetail(DetailView):
         user_response = Response.objects.filter(ad=ad, author__user=self.request.user).exists()
         context['user_response'] = user_response
         return context
+
+    def get_object(self, *args, **kwargs):
+        obj = cache.get(f'ad-{self.kwargs["pk"]}', None)
+
+        if not obj:
+            obj = super().get_object(queryset=self.queryset)
+            cache.set(f'ad-{self.kwargs["pk"]}', obj)
+        return obj
 
 
 class AdCreate(CreateView):
@@ -113,6 +129,7 @@ class MyResponses(ListView):
         if action == 'accept':
             response.is_accepted = True
             response.save()
+
         elif action == 'delete':
             response.delete()
 

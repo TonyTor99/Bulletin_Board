@@ -127,7 +127,7 @@ ACCOUNT_SIGNUP_REDIRECT_URL = '/'
 ACCOUNT_LOGOUT_REDIRECT_URL = '/'
 LOGIN_REDIRECT_URL = '/ads/'
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.yandex.ru'
 EMAIL_PORT = 465
 EMAIL_HOST_USER = "shpenov1@yandex.ru"
@@ -135,6 +135,12 @@ EMAIL_HOST_PASSWORD = "uwiamzuzflocmcst"
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
 DEFAULT_FROM_EMAIL = "shpenov1@yandex.ru"
+
+CELERY_BROKER_URL = 'redis://localhost:6379'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
@@ -151,9 +157,18 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [
     BASE_DIR / "static"
 ]
+
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': os.path.join(BASE_DIR, 'cache_files'),
+    }
+}
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -167,14 +182,13 @@ CKEDITOR_UPLOAD_PATH = "uploads/"
 CKEDITOR_CONFIGS = {
     'default': {
         'toolbar': [
-            {'name': 'insert', 'items': ['Image', 'Video']},  # Добавление инструментов для изображений и видео
+            {'name': 'insert', 'items': ['Image', 'html5video']},  # Добавление инструментов для изображений и видео
         ],
         'width': 'auto',
         'height': '300px',
         'extraPlugins': ','.join([
-            'image2',  # Для изображений
-            'embed',   # Для вставки видео
-            'embedbase',
+            'image2',
+            'html5video',
         ]),
         'removePlugins': 'sourcearea',  # Убирает возможность редактирования кода
         'image2_captionedClass': 'image',
@@ -183,7 +197,7 @@ CKEDITOR_CONFIGS = {
         'defaultImageWidth': '300px',    # Установка ширины по умолчанию (можно изменить значение)
         'defaultImageHeight': 'auto',    # Высота будет рассчитываться автоматически
         'removeButtons': 'Subscript,Superscript',  # Удаление ненужных кнопок
-        'allowedContent': 'p h1 h2 h3 blockquote strong em; img[!src,alt,width,height]; video[!src]',  # Разрешенные
+        'allowedContent': 'p h1 h2 h3 blockquote strong em; img[!src,alt]; video[!src]',  # Разрешенные
         # теги
     }
 }

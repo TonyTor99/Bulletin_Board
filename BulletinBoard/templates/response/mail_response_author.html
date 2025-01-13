@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Новый отклик на ваше объявление</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+        .email-container {
+            max-width: 600px;
+            margin: 20px auto;
+            background: #ffffff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            text-align: center;
+            border-bottom: 2px solid #f2f2f2;
+            margin-bottom: 20px;
+        }
+        .header h1 {
+            color: #555;
+        }
+        .content {
+            text-align: left;
+        }
+        .content p {
+            margin: 10px 0;
+        }
+        .ad-title {
+            font-weight: bold;
+            color: #1a73e8;
+        }
+        .response-content {
+            background-color: #f1f1f1;
+            padding: 10px;
+            border-radius: 6px;
+            margin: 10px 0;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 12px;
+            color: #aaa;
+        }
+        a {
+            color: #1a73e8;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="header">
+            <h1>Новый отклик на ваше объявление</h1>
+        </div>
+        <div class="content">
+            <p>Здравствуйте, {{ response.author.user.username }}!</p>
+            <p>На ваше объявление <span class="ad-title">{{ response.ad.title }}</span> появился новый отклик.</p>
+            <p><strong>Содержание отклика:</strong></p>
+            <div class="response-content">
+                {{ response.content }}
+            </div>
+            <p><strong>Время отклика:</strong> {{ response.created_at|date:"d M Y, H:i" }}</p>
+            <p>Вы можете просмотреть все отклики на ваше объявление <a href="{% url 'my_responses' %}">по этой ссылке</a>.</p>
+        </div>
+        <div class="footer">
+            <p>QuestBoard Team</p>
+            <p><a href="{% url 'welcome' %}">Перейти на сайт</a></p>
+        </div>
+    </div>
+</body>
+</html>
