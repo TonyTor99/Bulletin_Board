@@ -24,13 +24,6 @@
                         <div class="rich-text-content">
                             {{ ad.content|safe }}
                         </div>
-                            {% if messages %}
-                                <div class="alert alert-danger">
-                                {% for message in messages %}
-                                    <p>{{ message }}</p>
-                                {% endfor %}
-                                </div>
-                            {% endif %}
 
                         <!-- Форма отклика -->
                         {% if user != ad.author.user and not user_response %}

@@ -179,28 +179,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 CKEDITOR_UPLOAD_PATH = "uploads/"
-# CKEDITOR_CONFIGS = {
-#     'default': {
-#         'toolbar': [
-#             {'name': 'insert', 'items': ['Image', 'Html5video']},  # Добавление инструментов для изображений и видео
-#         ],
-#         'width': 'auto',
-#         'height': '300px',
-#         'extraPlugins': ','.join([
-#             'image2',
-#             'html5video',
-#         ]),
-#         'removePlugins': 'sourcearea',  # Убирает возможность редактирования кода
-#         'image2_captionedClass': 'image',
-#         'image2_alignClasses': ['image-align-left', 'image-align-center', 'image-align-right'],
-#         'image_prefillDimensions': True,  # Автоматическое добавление размеров
-#         'defaultImageWidth': '300px',    # Установка ширины по умолчанию (можно изменить значение)
-#         'defaultImageHeight': 'auto',    # Высота будет рассчитываться автоматически
-#         'removeButtons': 'Subscript,Superscript',  # Удаление ненужных кнопок
-#         'allowedContent': 'p h1 h2 h3 blockquote strong em; img[!src,alt]; video[!src]',  # Разрешенные
-#         # теги
-#     }
-# }
+
 CKEDITOR_CONFIGS = {
     'default': {
         'skin': 'moono-lisa',
